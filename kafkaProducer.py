@@ -46,14 +46,14 @@ def publish_camera():
     """
 
     # Start up producer
-    producer = KafkaProducer(bootstrap_servers='localhost:9092')
+    producer = KafkaProducer(bootstrap_servers='10.0.2.196:9092')
 
-    
     camera = cv2.VideoCapture(0)
     try:
         while(True):
             success, frame = camera.read()
-            producer.send(topic, frame)
+            ret, buffer = cv2.imencode('.jpg', frame)
+            producer.send(topic, buffer.tobytes())
             # Choppier stream, reduced load on processor
             time.sleep(0.2)
 
@@ -61,7 +61,6 @@ def publish_camera():
         print("\nExiting.")
         sys.exit(1)
 
-    
     camera.release()
 
 
@@ -76,4 +75,3 @@ if __name__ == '__main__':
     else:
         print("publishing feed!")
         publish_camera()
-1

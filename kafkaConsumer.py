@@ -1,7 +1,6 @@
 import datetime
 from flask import Flask, Response
 from kafka import KafkaConsumer
-import cv2
 from detect import detector
 
 # Fire up the Kafka Consumer
@@ -33,7 +32,7 @@ def get_video_stream():
     them to a Flask-readable format.
     """
     for msg in consumer:
-        result = object_detect.detect(msg.value)
+        result = object_detect.detect(object_detect.to_matrix(msg.value))
         yield (b'--frame\r\n'
                b'Content-Type: image/jpg\r\n\r\n' + result + b'\r\n\r\n')
 
