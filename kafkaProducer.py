@@ -52,8 +52,7 @@ def publish_camera():
     try:
         while(True):
             success, frame = camera.read()
-            ret, buffer = cv2.imencode('.jpg', frame)
-            producer.send(topic, buffer.tobytes())
+            producer.send(topic, frame.tobytes())
             # Choppier stream, reduced load on processor
             time.sleep(0.2)
 

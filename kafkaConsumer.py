@@ -8,7 +8,7 @@ topic = "distributed-video1"
 
 consumer = KafkaConsumer(
     topic, 
-    bootstrap_servers=['localhost:9092'])
+    bootstrap_servers=['10.0.2.196:9092'])
 
 object_detect = detector()
 
@@ -32,7 +32,8 @@ def get_video_stream():
     them to a Flask-readable format.
     """
     for msg in consumer:
-        result = object_detect.detect(object_detect.to_matrix(msg.value))
+        frame = object_detect.to_matrix(msg.value)
+        result = object_detect.detect(frame)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpg\r\n\r\n' + result + b'\r\n\r\n')
 

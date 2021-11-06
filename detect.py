@@ -8,9 +8,9 @@ class detector:
         with open('coco.names', 'r') as f:
             self.classes = f.read().splitlines()
 
-    def to_matrix(byte_string, cv2_img_flag=0):
+    def to_matrix(self, byte_string, cv2_img_flag=0):
         img_array =  np.frombuffer(byte_string, np.uint8)
-        return cv2.imdecode(img_array, cv2_img_flag)
+        return img_array.reshape(480,640,3)
 
     def detect(self, img):
         #_, img = cap.read()
