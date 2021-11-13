@@ -17,8 +17,8 @@ def publish_camera(topic, video):
 
 if __name__ == '__main__':
     if(len(sys.argv) > 1):
-        video_path = sys.argv[1]
-        topic_name = sys.argv[2]
+        topic_name = sys.argv[1]
+        video_path = sys.argv[2]
         publish_camera(topic_name, video_path)
     else:
         print("dont have any topic or video")
